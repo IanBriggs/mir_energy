@@ -8,74 +8,28 @@
 #include "comm.hpp"
 #include "functions.hpp"
 
-#define RUNS (30)
-#define ITERATIONS (1LL<<31)
+#define RUNS (10)
+#define ITERATIONS (1LL<<32)
 
 #define ADDRESS "155.98.68.68"
 #define PORT 20228
-#define SLEEPTIME 1
-
-double rand_double()
-{
-  double a=-10;
-  double b=10;
-  double random = ((double) rand()) / (double) RAND_MAX;
-  double diff = b - a;
-  double r = random * diff;
-  return a + r;
-}
+#define SLEEPTIME 8
 
 
-float rand_float()
-{
-  float a=-10;
-  float b=10;
-  float random = ((float) rand()) / (float) RAND_MAX;
-  float diff = b - a;
-  float r = random * diff;
-  return a + r;
-}
-
-
-void do_single_run_all64(cs::logger &log, char *mod, function_object *func_obj, int run) {
-  assert(func_obj->tag == all64);
-
-  function_all64 func = (function_all64) func_obj->func;
-  double a = rand_double(); 
-  double b = rand_double(); 
-  double c = rand_double(); 
-  double d = rand_double(); 
-  double e = rand_double(); 
+void do_single_run(cs::logger &log, char *mod, function_object *func_obj, int run) {
+  function func = func_obj->func;
+  double a = rand_double(-1.57079632679, 1.57079632679); // sine x
+  double b = rand_double(-5.0, 5.0); // jet x1 
+  double c = rand_double(-20.0, 5.0); // jet x2 
+  double d = 0.0; // unused 
+  double e = 0.0; // unused
 
   char buff[MAXBUF];
   sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
   log.start_logging(buff);
 
   for (long long i=0; i<ITERATIONS; i++) {
-    func(a, b, c, d, e);
-  }
-
-  ms_t elapsed = log.stop_logging();
-  std::cout << buff << ", " << elapsed.count() << std::endl;
-}
-
-
-void do_single_run_all32(cs::logger &log, char *mod, function_object *func_obj, int run) {
-  assert(func_obj->tag == all32 || func_obj->tag == mix);
-
-  function_all32 func = (function_all32) func_obj->func;
-  float a = rand_float(); 
-  float b = rand_float(); 
-  float c = rand_float(); 
-  float d = rand_float(); 
-  float e = rand_float(); 
-
-  char buff[MAXBUF];
-  sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
-  log.start_logging(buff);
-
-  for (long long i=0; i<ITERATIONS; i++) {
-    func(a, b, c, d, e);
+    func(a, b, c, (float) a, (float) b, (float) c);
   }
 
   ms_t elapsed = log.stop_logging();
@@ -86,11 +40,7 @@ void do_single_run_all32(cs::logger &log, char *mod, function_object *func_obj, 
 void do_full_run(cs::logger &log, char *mod, function_object *func_obj) {  
   for (int run=0; run<RUNS; run++) {
     srand(run+42);
-    if (func_obj->tag == all64) {
-      do_single_run_all64(log, mod, func_obj, run);
-    } else {
-      do_single_run_all32(log, mod, func_obj, run);
-    }
+    do_single_run(log, mod, func_obj, run);
   }
 }
 
