@@ -1,5 +1,5 @@
 CXX=arm-linux-gnueabihf-g++
-CXXFLAGS:= -std=c++0x -O3 -mfpu=neon $(CXXFLAGS)
+CXXFLAGS:= -std=c++0x -Os -mfpu=neon -march=native -fno-inline $(CXXFLAGS)
 
 CPLUS_INCLUDE_PATH:=${CURDIR}/include:${CPLUS_INCLUDE_PATH}
 export CPLUS_INCLUDE_PATH

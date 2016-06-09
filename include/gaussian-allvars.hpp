@@ -32,67 +32,67 @@ double gaussian_allvars_input_c(void) {
 
 
 
-void* gaussian_allvars_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
-  double x = _a64;
-  double ave = _b64;
-  double dev = _c64;
-
-  double ret64 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (exp2f((gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / (gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
-}
-
-// 1e-22
-void* gaussian_allvars_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
   double dev = _c64;
 
   double ret64 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (exp2((gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / (gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
+}
+
+// 1e-22
+double gaussian_allvars_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+  double x = _a64;
+  double ave = _b64;
+  double dev = _c64;
+
+  double ret64 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (exp2((gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / (gaussian_allvars__const_5 * (dev * dev)))))));
+  return ret64;
 }
 
 // 5e-08
-void* gaussian_allvars_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
   double dev = _c64;
 
   double ret64 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (double)(exp2f((float)(gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / (gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 1e-07
-void* gaussian_allvars_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
   double dev = _c64;
 
   double ret64 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (double)(exp2f(((float)gaussian_allvars__const_6 * (((float)(x - ave) * (float)(x - ave)) / (float)(gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 5e-07
-void* gaussian_allvars_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a64;
   float ave = _b32;
   float dev = _c32;
 
   float ret32 = (((float)gaussian_allvars__const_4 / (dev * (float)gaussian_allvars__const_3)) * (exp2f(((float)gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / ((float)gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_allvars_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a64;
   float ave = _b32;
   float dev = _c32;
 
   float ret32 = ((gaussian_allvars__const_4 / (dev * gaussian_allvars__const_3)) * (exp2f((gaussian_allvars__const_6 * (((x - ave) * (x - ave)) / (gaussian_allvars__const_5 * (dev * dev)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_allvars_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_allvars_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x64 = _a64;
   double ave64 = _b64;
   double dev64 = _c64;
@@ -157,14 +157,14 @@ void* gaussian_allvars_adaptive(double _a64, double _b64, double _c64, float _a3
 
   MIX0:
     ret64 = ((gaussian_allvars__const_4 / (dev64 * gaussian_allvars__const_3)) * (double)(exp2f((float)(gaussian_allvars__const_6 * (((x64 - ave64) * (x64 - ave64)) / (gaussian_allvars__const_5 * (dev64 * dev64)))))));
-    return (void*) &ret64;
+    return ret64;
   MIX1:
     ret64 = ((gaussian_allvars__const_4 / (dev64 * gaussian_allvars__const_3)) * (double)(exp2f(((float)gaussian_allvars__const_6 * ((float)((x64 - ave64) * (x64 - ave64)) / (float)(gaussian_allvars__const_5 * (dev64 * dev64)))))));
-    return (void*) &ret64;
+    return ret64;
   MIX2:
     ret64 = ((double)((float)gaussian_allvars__const_4 / ((float)dev * (float)gaussian_allvars__const_3)) * (double)(exp2f((float)(gaussian_allvars__const_6 * (((x64 - ave64) * (x64 - ave64)) / (gaussian_allvars__const_5 * (dev64 * dev64)))))));
-    return (void*) &ret64;
+    return ret64;
   MIX3:
     ret32 = (((float)gaussian_allvars__const_4 / (float)(dev64 * gaussian_allvars__const_3)) * (exp2f(((float)gaussian_allvars__const_6 * (((float)(x64 - ave64) * (float)(x64 - ave64)) / (float)(gaussian_allvars__const_5 * (dev64 * dev64)))))));
-    return (void*) &ret32;
+    return ret32;
 }

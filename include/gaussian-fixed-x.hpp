@@ -31,61 +31,61 @@ double gaussian_fixed_x_input_c(void) {
 
 
 
-void* gaussian_fixed_x_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double ave = _a64;
   double dev = _b64;
 
   double ret64 = ((gaussian_fixed_x__const_4 / (dev * gaussian_fixed_x__const_3)) * (exp2((gaussian_fixed_x__const_6 * (((gaussian_fixed_x__const_2 - ave) * (gaussian_fixed_x__const_2 - ave)) / (gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 1e-22
-void* gaussian_fixed_x_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double ave = _a64;
   double dev = _b64;
 
   double ret64 = ((gaussian_fixed_x__const_4 / (dev * gaussian_fixed_x__const_3)) * (exp2((gaussian_fixed_x__const_6 * (((gaussian_fixed_x__const_2 - ave) * (gaussian_fixed_x__const_2 - ave)) / (gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 5e-08
-void* gaussian_fixed_x_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double ave = _a64;
   double dev = _b64;
 
   double ret64 = ((gaussian_fixed_x__const_4 / (dev * gaussian_fixed_x__const_3)) * (double)(exp2f((float)(gaussian_fixed_x__const_6 * ((double)(((float)gaussian_fixed_x__const_2 - (float)ave) * ((float)gaussian_fixed_x__const_2 - (float)ave)) / (gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 1e-07
-void* gaussian_fixed_x_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double ave = _a64;
   double dev = _b64;
 
   double ret64 = ((gaussian_fixed_x__const_4 / (dev * gaussian_fixed_x__const_3)) * (double)(exp2f(((float)gaussian_fixed_x__const_6 * (((float)(gaussian_fixed_x__const_2 - ave) * (float)(gaussian_fixed_x__const_2 - ave)) / ((float)gaussian_fixed_x__const_5 * ((float)dev * (float)dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 5e-07
-void* gaussian_fixed_x_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float ave = _a32;
   float dev = _b32;
 
   float ret32 = (((float)gaussian_fixed_x__const_4 / (dev * (float)gaussian_fixed_x__const_3)) * (exp2f(((float)gaussian_fixed_x__const_6 * ((((float)gaussian_fixed_x__const_2 - ave) * ((float)gaussian_fixed_x__const_2 - ave)) / ((float)gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_fixed_x_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float ave = _a32;
   float dev = _b32;
 
   float ret32 = ((gaussian_fixed_x__const_4 / (dev * gaussian_fixed_x__const_3)) * (exp2f((gaussian_fixed_x__const_6 * (((gaussian_fixed_x__const_2 - ave) * (gaussian_fixed_x__const_2 - ave)) / (gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_fixed_x_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double ave64 = _a64;
   double dev64 = _b64;
   float ave = _a32;
@@ -113,11 +113,11 @@ void* gaussian_fixed_x_adaptive(double _a64, double _b64, double _c64, float _a3
     
  MIX0:
   ret64 = ((gaussian_fixed_x__const_4 / (dev64 * gaussian_fixed_x__const_3)) * (double)(exp2f(((float)gaussian_fixed_x__const_6 * (((float)(gaussian_fixed_x__const_2 - ave64) * (float)(gaussian_fixed_x__const_2 - ave64)) / (float)(gaussian_fixed_x__const_5 * (dev64 * dev64)))))));
-  return (void*) &ret64;
+  return ret64;
  MIX1:
   ret64 = ((gaussian_fixed_x__const_4 / (dev64 * gaussian_fixed_x__const_3)) * (double)(exp2f(((float)gaussian_fixed_x__const_6 * ((((float)gaussian_fixed_x__const_2 - ave) * ((float)gaussian_fixed_x__const_2 - ave)) / (float)(gaussian_fixed_x__const_5 * (dev64 * dev64)))))));
-  return (void*) &ret64;
+  return ret64;
  MIX2:
   ret64 =  ((gaussian_fixed_x__const_4 / (double)(dev * (float)gaussian_fixed_x__const_3)) * (double)(exp2f(((float)gaussian_fixed_x__const_6 * ((((float)gaussian_fixed_x__const_2 - ave) * ((float)gaussian_fixed_x__const_2 - ave)) / ((float)gaussian_fixed_x__const_5 * (dev * dev)))))));
-  return (void*) &ret64;
+  return ret64;
 }

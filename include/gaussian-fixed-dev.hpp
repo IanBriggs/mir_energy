@@ -31,61 +31,61 @@ double gaussian_fixed_dev_input_c(void) {
 
 
 
-void* gaussian_fixed_dev_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
 
   double ret64 = ((__const_4 / (__const_1 * __const_3)) * (exp2f((__const_6 * (((x - ave) * (x - ave)) / (__const_5 * (__const_1 * __const_1)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 1e-22
-void* gaussian_fixed_dev_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
 
   double ret64 = ((__const_4 / (__const_1 * __const_3)) * (exp2((__const_6 * (((x - ave) * (x - ave)) / (__const_5 * (__const_1 * __const_1)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 5e-08
-void* gaussian_fixed_dev_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
 
   double ret64 = ((__const_4 / (__const_1 * __const_3)) * (double)(exp2f((float)(__const_6 * (((x - ave) * (x - ave)) / (double)((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 1e-07
-void* gaussian_fixed_dev_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
   double ave = _b64;
 
   double ret64 = ((double)((float)__const_4 / (float)(__const_1 * __const_3)) * (double)(exp2f(((float)__const_6 * ((float)((x - ave) * (x - ave)) / ((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-  return (void*) &ret64;
+  return ret64;
 }
 
 // 5e-07
-void* gaussian_fixed_dev_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a32;
   float ave = _b32;
 
   float ret32 = (((float)__const_4 / ((float)__const_1 * (float)__const_3)) * (exp2f(((float)__const_6 * (((x - ave) * (x - ave)) / ((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_fixed_dev_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a32;
   float ave = _b32;
 
   float ret32 = ((__const_4 / (__const_1 * __const_3)) * (exp2f((__const_6 * (((x - ave) * (x - ave)) / (__const_5 * (__const_1 * __const_1)))))));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
-void* gaussian_fixed_dev_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x64 = _a64;
   double ave64 = _b64;
   float x = _a32;
@@ -113,11 +113,11 @@ void* gaussian_fixed_dev_adaptive(double _a64, double _b64, double _c64, float _
 
   MIX0: 
     ret64 = ((__const_4 / (__const_1 * __const_3)) * (double)(exp2f((float)(__const_6 * (((x64 - ave64) * (x64 - ave64)) / (double)((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-    return (void*) &ret64;
+    return ret64;
   MIX1:
     ret32 = (((float)__const_4 / ((float)__const_1 * (float)__const_3)) * (exp2f(((float)__const_6 * (((float)(x64 - ave64) * (float)(x64 - ave64)) / ((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-    return (void*) &ret32; 
+    return ret32; 
   MIX2: 
     ret32 = (((float)__const_4 / ((float)__const_1 * (float)__const_3)) * (exp2f((float)(__const_6 * (((x64 - ave64) * (x64 - ave64)) / (double)((float)__const_5 * ((float)__const_1 * (float)__const_1)))))));
-    return (void*) &ret32; 
+    return ret32; 
 }

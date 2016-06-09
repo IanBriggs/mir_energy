@@ -26,35 +26,43 @@ double sine_input_c(void) {
 
 
 
-void* sine_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double sine_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   double x = _a64;
 
-  double ret64 =  (((x - (((x * x) * x) / sine__const_0)) + (((x * x) * ((x * x) * x)) / sine__const_1)) - (((x * x) * ((x * x) * ((x * x) * x))) / sine__const_2));
-  return (void*) &ret64;
+  double ret64 = (((x - (((x * x) * x) / sine__const_0)) + (((x * x) * ((x * x) * x)) / sine__const_1)) - (((x * x) * ((x * x) * ((x * x) * x))) / sine__const_2));
+  return ret64;
+}
+
+// 1e-07
+double sine_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+  double x = _a64;
+
+ float ret64 = (((x - (double)((float)((x * x) * x) / (float)sine__const_0)) + (double)(((float)(x * x) * (float)((x * x) * x)) / (float)sine__const_1)) - (double)(((float)(x * x) * ((float)(x * x) * (float)((x * x) * x))) / (float)sine__const_2));
+  return ret64;
 }
 
 // 2e-07
-void* sine_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
-  double x = _a64;
+double sine_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+  float x = _a32;
 
- float ret32 = (((float)(x - (((x * x) * x) / sine__const_0)) + ((float)((x * x) * ((x * x) * x)) / (float)sine__const_1)) - ((float)((x * x) * ((x * x) * ((x * x) * x))) / (float)sine__const_2));
-  return (void*) &ret32;
+  float ret32 = (((float)(x - (((x * x) * x) / sine__const_0)) + ((float)((x * x) * ((x * x) * x)) / (float)sine__const_1)) - ((float)((x * x) * ((x * x) * ((x * x) * x))) / (float)sine__const_2));
+  return ret32;
 }
 
 // 4e-07
-void* sine_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double sine_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a32;
 
-  double ret64 =  (((double)(x - (((x * x) * x) / (float)sine__const_0)) + (double)(((x * x) * ((x * x) * x)) / (float)sine__const_1)) - (double)(((x * x) * ((x * x) * ((x * x) * x))) / (float)sine__const_2));
-  return (void*) &ret64;
+  double ret64 = (((double)(x - (((x * x) * x) / (float)sine__const_0)) + (double)(((x * x) * ((x * x) * x)) / (float)sine__const_1)) - (double)(((x * x) * ((x * x) * ((x * x) * x))) / (float)sine__const_2));
+  return ret64;
 }
 
 
-void* sine_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double sine_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
   float x = _a32;
 
   float ret32 = (((x - (((x * x) * x) / (float)sine__const_0)) + (((x * x) * ((x * x) * x)) / (float)sine__const_1)) - (((x * x) * ((x * x) * ((x * x) * x))) / (float)sine__const_2));
-  return (void*) &ret32;
+  return ret32;
 }
 
 
