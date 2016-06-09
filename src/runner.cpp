@@ -59,44 +59,39 @@ void br_32(float *arr32) {
 void balanced_reduction(cs::logger &log, char *mod, int run, int type) {
   float arr32[512];
   double arr64[512];
-  if (type == ALL32 || type == DATA32 || type == MIXED) {
-    for (int i = 0 ; i < 512 ; i++) {
-      arr32[i] = (float)rand_double(-1.0, 1.0);
-    }
-  } else if (type == ALL64) {
-    for (int i = 0 ; i < 512 ; i++) {
-      arr64[i] = rand_double(-1.0, 1.0);
-    }
-  }
 
   char buff[MAXBUF];
   sprintf(buff, "ian_balanced_reduction_%s_%s_run_%d.csv", BRNAMES[type], mod, run);
   log.start_logging(buff);
 
-  switch(type) {
-  case ALL64:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+  for (int r = 0 ; r < ITERATIONS ; r++) {
+    if (type == ALL32 || type == DATA32 || type == MIXED) {
+      for (int i = 0 ; i < 512 ; i++) {
+	arr32[i] = (float)rand_double(-1.0, 1.0);
+      }
+    } else if (type == ALL64) {
+      for (int i = 0 ; i < 512 ; i++) {
+	arr64[i] = rand_double(-1.0, 1.0);
+      }
+    }
+
+    switch(type) {
+    case ALL64:
       br_64(arr64);
-    }
-    break;
+      break;
 
-  case DATA32:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    case DATA32:
       brd_32(arr32, arr64);
-    }
-    break;
+      break;
 
-  case MIXED:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    case MIXED:
       br_m(arr32, arr64);
-    }
-    break;
+      break;
 
-  case ALL32:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    case ALL32:
       br_32(arr32);
+      break;
     }
-    break;
   }
 
   ms_t elapsed = log.stop_logging();
@@ -287,19 +282,19 @@ int main(int argc, char **argv) {
   std::cout << "iterations, " << ITERATIONS << std::endl;
   std::cout << "runs, " << RUNS << std::endl;
 
-  for (int type=0; type<4; type++) {
-    for (int run=0; run<RUNS; run++) {
-      srand(run+42);
-      balanced_reduction(log, mod, run, type);
-    }
-  }
+  // for (int type=0; type<4; type++) {
+  //   for (int run=0; run<RUNS; run++) {
+  //     srand(run+42);
+  //     balanced_reduction(log, mod, run, type);
+  //   }
+  // }
 
-  for (int type=0; type<4; type++) {
-    for (int run=0; run<RUNS; run++) {
-      srand(run+42);
-      horner(log, mod, run, type);
-    }
-  }
+  // for (int type=0; type<4; type++) {
+  //   for (int run=0; run<RUNS; run++) {
+  //     srand(run+42);
+  //     horner(log, mod, run, type);
+  //   }
+  // }
 
   for (int index=0; index<NUM_FUNCTIONS; index++) {
     do_full_run(log, mod, &FUNCTIONS[index]);
