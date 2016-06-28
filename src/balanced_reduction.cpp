@@ -6,7 +6,7 @@
 #include "rand_double.hpp"
 
 const long long BALANCED_REDUCTION_ITERATIONS = 1<<24;
-const int BALANCED_REDUCTION_LENGTH = 512;
+const int BALANCED_REDUCTION_LENGTH = 128;
 
 
 typedef double (*balanced_reduction_function)(int, double*, float*, double*, float*);
@@ -126,15 +126,21 @@ void do_balanced_reduction_run_set(cs::logger &log, char *mod,
     srand(run+42);
     do_balanced_reduction_run(log, mod, func_obj, run, arr64, arr32, scratch64, scratch32);
   }
+  
+  free(arr64);
+  free(arr32);
+  free(scratch64);
+  free(scratch32);
 }
+
 
 
 const int NUM_BALANCED_REDUCTION_FUNCTIONS = 4;
 balanced_reduction_function_object BALANCED_REDUCTION_FUNCTIONS[NUM_BALANCED_REDUCTION_FUNCTIONS] = {
-  {balanced_reduction_all_64, "balanced_reduction_all_64"},
-  {balanced_reduction_data_32, "balanced_reduction_data_32"},
-  {balanced_reduction_mix, "balanced_reduction_mix"},
-  {balanced_reduction_all_32, "balanced_reduction_all_32"},
+  {balanced_reduction_all_64,(char*) "balanced_reduction_all_64"},
+  {balanced_reduction_data_32,(char*) "balanced_reduction_data_32"},
+  {balanced_reduction_mix,(char*) "balanced_reduction_mix"},
+  {balanced_reduction_all_32,(char*) "balanced_reduction_all_32"},
 };
 
 

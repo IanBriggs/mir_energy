@@ -6,7 +6,7 @@
 #include "rand_double.hpp"
 
 const long long HORNER_ITERATIONS = 1<<24;
-const int HORNER_LENGTH = 200;
+const int HORNER_LENGTH = 32;
 
 
 typedef double (*horner_function)(int, double*, float*, double, float);
@@ -140,15 +140,18 @@ void do_horner_run_set(cs::logger &log, char *mod,
     srand(run+42);
     do_horner_run(log, mod, func_obj, run, coeff64, coeff32);
   }
+
+  free(coeff64);
+  free(coeff32);
 }
 
 
 const int NUM_HORNER_FUNCTIONS = 4;
 horner_function_object HORNER_FUNCTIONS[NUM_HORNER_FUNCTIONS] = {
-  {horner_all_64, "horner_all_64"},
-  {horner_adaptive_0, "horner_adaptive_1E-06"},
-  {horner_adaptive_1, "horner_adaptive_1E-05"},
-  {horner_all_32, "horner_all_32"},
+  {horner_all_64,     (char*) "horner_all_64"},
+  {horner_adaptive_0, (char*) "horner_adaptive_1E-06"},
+  {horner_adaptive_1, (char*) "horner_adaptive_1E-05"},
+  {horner_all_32,     (char*) "horner_all_32"},
 };
 
 
