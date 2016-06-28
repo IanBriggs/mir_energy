@@ -1,10 +1,13 @@
-#pragma once
+#ifndef COMM_H
+#define COMM_H
 
 #define MAXBUF 512
 
 #include <exception>
 #include <string>
 #include <chrono>
+
+
 
 
 typedef std::chrono::high_resolution_clock log_clock;
@@ -48,4 +51,6 @@ namespace cs {
     virtual ~logger_exception() throw();
   };
 }
-  
+
+
+#endif
