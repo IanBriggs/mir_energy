@@ -6,7 +6,7 @@
 #include "rand_double.hpp"
 
 const long long BALANCED_REDUCTION_ITERATIONS = 1<<24;
-const int BALANCED_REDUCTION_LENGTH = 50;
+const int BALANCED_REDUCTION_LENGTH = 512;
 
 
 typedef double (*balanced_reduction_function)(int, double*, float*, double*, float*);

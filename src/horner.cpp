@@ -6,7 +6,7 @@
 #include "rand_double.hpp"
 
 const long long HORNER_ITERATIONS = 1<<24;
-const int HORNER_LENGTH = 50;
+const int HORNER_LENGTH = 200;
 
 
 typedef double (*horner_function)(int, double*, float*, double, float);
