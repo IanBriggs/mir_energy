@@ -1,12 +1,15 @@
 
+#include <string.h>
 #include <stdio.h> 
 #include <assert.h> 
 
+#include <iostream>
+
 #include "rand_double.hpp"
-#include "comm.cpp"
+#include "comm.hpp"
 
 #define RUNS (30)
-#define ITERATIONS (1LL<<27)
+#define ITERATIONS (1LL<<29)
 
 #define ADDRESS "155.98.68.68"
 #define PORT 20228
@@ -34,7 +37,32 @@ MDet3x3 (D0 m0, D1 m1, D2 m2,
 }
 
 
-int main (void) {
+F13 single_iter(F0 a0, F0 a1, F0 b0, F0 b1, F0 c0, F0 c1, F0 d0, F0 d1) {
+  F1 ad_0 = (F1)a0 - (F1)d0; 
+  F1 ad_1 = (F1)a1 - (F1)d1; 
+    
+  F2 bd_0 = (F2)b0 - (F2)d0; 
+  F2 bd_1 = (F2)b1 - (F2)d1; 
+    
+  F3 cd_0 = (F3)c0 - (F3)d0; 
+  F3 cd_1 = (F3)c1 - (F3)d1; 
+    
+  F4 ad2  = ((F4)ad_0 * (F4)ad_0) + ((F4)ad_1 * (F4)ad_1); 
+    
+  F5 bd2  = ((F5)bd_0 * (F5)bd_0) + ((F5)bd_1 * (F5)bd_1); 
+    
+  F6 cd2  = ((F6)cd_0 * (F6)cd_0) + ((F6)cd_1 * (F6)cd_1); 
+    
+  F13 rel = MDet3x3<F7, F8, F9, F10, F11, F12, F13, F1, F1, F4, F2, F2, F5, F3, F3, F6>
+    (ad_0, ad_1, ad2, 
+     bd_0, bd_1, bd2, 
+     cd_0, cd_1, cd2); 
+  return rel;
+}
+ 
+
+
+int main (int argc, char ** argv) {
   if (argc > 2) {
     printf("Usage: %s [output-name-modifier]\n", argv[0]);
     return -1;
@@ -53,40 +81,22 @@ int main (void) {
 
   for (int run=0; run<RUNS; run++) {
 
-    F0 a0 = rand_double(-1.0, 1.0); 
-    F0 a1 = rand_double(-1.0, 1.0); 
-    F0 b0 = rand_double(-1.0, 1.0); 
-    F0 b1 = rand_double(-1.0, 1.0); 
-    F0 c0 = rand_double(-1.0, 1.0); 
-    F0 c1 = rand_double(-1.0, 1.0); 
-    F0 d0 = rand_double(-1.0, 1.0); 
-    F0 d1 = rand_double(-1.0, 1.0); 
+    volatile F0 a0 = rand_double(-1.0, 1.0); 
+    volatile F0 a1 = rand_double(-1.0, 1.0); 
+    volatile F0 b0 = rand_double(-1.0, 1.0); 
+    volatile F0 b1 = rand_double(-1.0, 1.0); 
+    volatile F0 c0 = rand_double(-1.0, 1.0); 
+    volatile F0 c1 = rand_double(-1.0, 1.0); 
+    volatile F0 d0 = rand_double(-1.0, 1.0); 
+    volatile F0 d1 = rand_double(-1.0, 1.0); 
 
     char buff[MAXBUF];
     sprintf(buff, "ian_%s_%s_run_%d.csv", argv[0], mod, run);
     log.start_logging(buff);
 
 
-    for (int i = 0 ; i < ITERATIONS ; i++) {
-      F1 ad_0 = (F1)a0 - (F1)d0; 
-      F1 ad_1 = (F1)a1 - (F1)d1; 
-    
-      F2 bd_0 = (F2)b0 - (F2)d0; 
-      F2 bd_1 = (F2)b1 - (F2)d1; 
-    
-      F3 cd_0 = (F3)c0 - (F3)d0; 
-      F3 cd_1 = (F3)c1 - (F3)d1; 
-    
-      F4 ad2  = ((F4)ad_0 * (F4)ad_0) + ((F4)ad_1 * (F4)ad_1); 
-    
-      F5 bd2  = ((F5)bd_0 * (F5)bd_0) + ((F5)bd_1 * (F5)bd_1); 
-    
-      F6 cd2  = ((F6)cd_0 * (F6)cd_0) + ((F6)cd_1 * (F6)cd_1); 
-    
-      F13 rel = MDet3x3<F7, F8, F9, F10, F11, F12, F13, F1, F1, F4, F2, F2, F5, F3, F3, F6>
-	(ad_0, ad_1, ad2, 
-	 bd_0, bd_1, bd2, 
-	 cd_0, cd_1, cd2); 
+    for (long long i = 0 ; i < ITERATIONS ; i++) {
+      volatile F13 retval = single_iter(a0, a1, b0, b1, c0, c1, d0, d1);
     }
 
     ms_t elapsed = log.stop_logging();

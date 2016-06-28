@@ -1,12 +1,15 @@
 
+#include <string.h>
 #include <stdio.h> 
 #include <assert.h> 
 
+#include <iostream>
+
 #include "rand_double.hpp"
-#include "comm.cpp"
+#include "comm.hpp"
 
 #define RUNS (30)
-#define ITERATIONS (1LL<<27)
+#define ITERATIONS (1LL<<28)
 
 #define ADDRESS "155.98.68.68"
 #define PORT 20228
@@ -34,48 +37,8 @@ MDet3x3 (D0 m0, D1 m1, D2 m2,
   return rel; 
 }
 
-
-int main (void) {
-  if (argc > 2) {
-    printf("Usage: %s [output-name-modifier]\n", argv[0]);
-    return -1;
-  }
-
-  char mod[125] = "default";
-  if (argc == 2) {
-    assert(strlen(argv[1]) < 124);
-    strcpy(mod, argv[1]);
-  }
-
-  cs::logger log(ADDRESS, PORT, SLEEPTIME);
-
-  std::cout << "iterations, " << ITERATIONS << std::endl;
-  std::cout << "runs, " << RUNS << std::endl;
-
-  for (int run=0; run<RUNS; run++) {
-
-    F0 a0 = rand_double(-1.0, 1.0); 
-    F0 a1 = rand_double(-1.0, 1.0);
-    F0 a2 = rand_double(-1.0, 1.0);
-    F0 b0 = rand_double(-1.0, 1.0);
-    F0 b1 = rand_double(-1.0, 1.0);
-    F0 b2 = rand_double(-1.0, 1.0);
-    F0 c0 = rand_double(-1.0, 1.0);
-    F0 c1 = rand_double(-1.0, 1.0);
-    F0 c2 = rand_double(-1.0, 1.0);
-    F0 d0 = rand_double(-1.0, 1.0);
-    F0 d1 = rand_double(-1.0, 1.0);
-    F0 d2 = rand_double(-1.0, 1.0);
-    F0 e0 = rand_double(-1.0, 1.0);
-    F0 e1 = rand_double(-1.0, 1.0);
-    F0 e2 = rand_double(-1.0, 1.0);
-
-    char buff[MAXBUF];
-    sprintf(buff, "ian_%s_%s_run_%d.csv", argv[0], mod, run);
-    log.start_logging(buff);
-
-    for (int i = 0 ; i < ITERATIONS ; i++) {
-      F1 ae_0 = (F1)a0 - (F1)e0; 
+F13 single_iter(F0 a0, F0 a1, F0 a2, F0 b0, F0 b1, F0 b2, F0 c0, F0 c1, F0 c2, F0 d0, F0 d1, F0 d2, F0 e0, F0 e1, F0 e2) {
+        F1 ae_0 = (F1)a0 - (F1)e0; 
       F1 ae_1 = (F1)a1 - (F1)e1; 
       F1 ae_2 = (F1)a2 - (F1)e2; 
       
@@ -135,8 +98,54 @@ int main (void) {
 	 ce_0, ce_1, ce_2, 
 	 de_0, de_1, de_2); 
 
-      F37 rel = ((F37)ae_0 * (F37)m0 + (F37)ae_2 * (F37)m2) - ((F37)ae_1 * (F37)m1 + (F37)ae2 * (F37)m3); 
+      F37 rel = ((F37)ae_0 * (F37)m0 + (F37)ae_2 * (F37)m2) - ((F37)ae_1 * (F37)m1 + (F37)ae2 * (F37)m3);
+      return rel;
+}
+
+
+int main (int argc, char ** argv) {
+  if (argc > 2) {
+    printf("Usage: %s [output-name-modifier]\n", argv[0]);
+    return -1;
+  }
+
+  char mod[125] = "default";
+  if (argc == 2) {
+    assert(strlen(argv[1]) < 124);
+    strcpy(mod, argv[1]);
+  }
+
+  cs::logger log(ADDRESS, PORT, SLEEPTIME);
+
+  std::cout << "iterations, " << ITERATIONS << std::endl;
+  std::cout << "runs, " << RUNS << std::endl;
+
+  for (int run=0; run<RUNS; run++) {
+
+    volatile F0 a0 = rand_double(-1.0, 1.0); 
+    volatile F0 a1 = rand_double(-1.0, 1.0);
+    volatile F0 a2 = rand_double(-1.0, 1.0);
+    volatile F0 b0 = rand_double(-1.0, 1.0);
+    volatile F0 b1 = rand_double(-1.0, 1.0);
+    volatile F0 b2 = rand_double(-1.0, 1.0);
+    volatile F0 c0 = rand_double(-1.0, 1.0);
+    volatile F0 c1 = rand_double(-1.0, 1.0);
+    volatile F0 c2 = rand_double(-1.0, 1.0);
+    volatile F0 d0 = rand_double(-1.0, 1.0);
+    volatile F0 d1 = rand_double(-1.0, 1.0);
+    volatile F0 d2 = rand_double(-1.0, 1.0);
+    volatile F0 e0 = rand_double(-1.0, 1.0);
+    volatile F0 e1 = rand_double(-1.0, 1.0);
+    volatile F0 e2 = rand_double(-1.0, 1.0);
+
+    char buff[MAXBUF];
+    sprintf(buff, "ian_%s_%s_run_%d.csv", argv[0], mod, run);
+    log.start_logging(buff);
+
+    for (long long i = 0 ; i < ITERATIONS ; i++) {
+      volatile F37 retval = single_iter(a0, a1, a2, b0, b1, b2, c0, c1, c2, d0, d1, d2, e0, e1, e2);
     }
+
     ms_t elapsed = log.stop_logging();
     std::cout << buff << ", " << elapsed.count() << std::endl;
   }

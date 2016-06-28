@@ -10,9 +10,8 @@
 #include "rand_double.hpp"
 
 
-#define RUNS (30)
-#define ITERATIONS (1LL<<27)
-
+#define RUNS (36)
+#define BR_ITERATIONS (1LL<<24)
 #define ADDRESS "155.98.68.68"
 #define PORT 20228
 #define SLEEPTIME 2
@@ -60,21 +59,32 @@ void balanced_reduction(cs::logger &log, char *mod, int run, int type) {
   float arr32[512];
   double arr64[512];
 
+  float arr32_c[512];
+  double arr64_c[512];
+
+  
+  if (type == ALL32 || type == DATA32 || type == MIXED) {
+    for (int i = 0 ; i < 512 ; i++) {
+      arr32_c[i] = (float)rand_double(-1.0, 1.0);
+    }
+  } else if (type == ALL64) {
+    for (int i = 0 ; i < 512 ; i++) {
+      arr64_c[i] = rand_double(-1.0, 1.0);
+    }
+  }
+
+  
   char buff[MAXBUF];
   sprintf(buff, "ian_balanced_reduction_%s_%s_run_%d.csv", BRNAMES[type], mod, run);
   log.start_logging(buff);
 
-  for (int r = 0 ; r < ITERATIONS ; r++) {
+  for (long long r = 0 ; r < BR_ITERATIONS ; r++) {
     if (type == ALL32 || type == DATA32 || type == MIXED) {
-      for (int i = 0 ; i < 512 ; i++) {
-	arr32[i] = (float)rand_double(-1.0, 1.0);
-      }
+      memcpy(arr32, arr32_c, sizeof(float)*512);
     } else if (type == ALL64) {
-      for (int i = 0 ; i < 512 ; i++) {
-	arr64[i] = rand_double(-1.0, 1.0);
-      }
+      memcpy(arr64, arr64_c, sizeof(double)*512);
     }
-
+    
     switch(type) {
     case ALL64:
       br_64(arr64);
@@ -204,25 +214,25 @@ void horner(cs::logger &log, char *mod, int run, int type) {
 
   switch(type) {
   case ALL64:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    for (long long r = 0 ; r < BR_ITERATIONS ; r++) {
       volatile double retval = h_64(coeff64, x64);
     }
     break;
 
   case ADAP0:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    for (long long r = 0 ; r < BR_ITERATIONS ; r++) {
       volatile double retval = h_A0(coeff64, coeff32, x64, x32);
     }
     break;
 
   case ADAP1:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    for (long long r = 0 ; r < BR_ITERATIONS ; r++) {
       volatile double retval = h_A1(coeff64, coeff32, x64, x32);
     }
     break;
 
   case ALL32:
-    for (int r = 0 ; r < ITERATIONS ; r++) {
+    for (long long r = 0 ; r < BR_ITERATIONS ; r++) {
       volatile double retval = h_32(coeff32, x32);
     }
     break;
@@ -234,21 +244,57 @@ void horner(cs::logger &log, char *mod, int run, int type) {
 
 
 
-void do_single_run(cs::logger &log, char *mod, function_object *func_obj, int run) {
-  function func = func_obj->func;
+void do_unary_run(cs::logger &log, char *mod, unary_function_object *func_obj, int run) {
+  unary_function func = func_obj->func;;
   double a64 = func_obj->a_gen();
-  double b64 = func_obj->b_gen();
-  double c64 = func_obj->c_gen();
-
   float a32 = a64;
-  float b32 = b64;
-  float c32 = c64;
-
+    
   char buff[MAXBUF];
   sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
   log.start_logging(buff);
 
-  for (long long i=0; i<ITERATIONS; i++) {
+  for (long long i=0; i<func_obj->iterations; i++) {
+    func(a64, a32);
+  }
+
+  ms_t elapsed = log.stop_logging();
+  std::cout << buff << ", " << elapsed.count() << std::endl;
+}
+
+void do_binary_run(cs::logger &log, char *mod, binary_function_object *func_obj, int run) {
+  binary_function func = func_obj->func;;
+  double a64 = func_obj->a_gen();
+  double b64 = func_obj->b_gen();
+  std::cout << "Input: " << a64 << " , " << b64 << std::endl;
+  float a32 = a64;
+  float b32 = b64;
+    
+  char buff[MAXBUF];
+  sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
+  log.start_logging(buff);
+
+  for (long long i=0; i<func_obj->iterations; i++) {
+    func(a64, b64, a32, b32);
+  }
+
+  ms_t elapsed = log.stop_logging();
+  std::cout << buff << ", " << elapsed.count() << std::endl;
+}
+
+void do_trinary_run(cs::logger &log, char *mod, trinary_function_object *func_obj, int run) {
+  trinary_function func = func_obj->func;;
+  double a64 = func_obj->a_gen();
+  double b64 = func_obj->b_gen();
+  double c64 = func_obj->c_gen();
+  float a32 = a64;
+  float b32 = b64;
+  float c32 = c64;
+	
+  char buff[MAXBUF];
+  sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
+  log.start_logging(buff);
+
+  for (long long i=0; i<func_obj->iterations; i++) {
     func(a64, b64, c64, a32, b32, c32);
   }
 
@@ -256,11 +302,25 @@ void do_single_run(cs::logger &log, char *mod, function_object *func_obj, int ru
   std::cout << buff << ", " << elapsed.count() << std::endl;
 }
 
-
-void do_full_run(cs::logger &log, char *mod, function_object *func_obj) {
+void do_full_run(cs::logger &log, char *mod,
+		 unary_function_object *ufunc_obj,
+		 binary_function_object *bfunc_obj,
+		 trinary_function_object *tfunc_obj) {
+  if (ufunc_obj != NULL) 
+    std::cout << "Iterations," << ufunc_obj->iterations << std::endl;
+  if (bfunc_obj != NULL)
+    std::cout << "Iterations," << bfunc_obj->iterations << std::endl;
+  if (tfunc_obj != NULL)
+    std::cout << "Iterations," << tfunc_obj->iterations << std::endl;
+    
   for (int run=0; run<RUNS; run++) {
     srand(run+42);
-    do_single_run(log, mod, func_obj, run);
+    if (ufunc_obj != NULL)
+      do_unary_run(log, mod, ufunc_obj, run);
+    if (bfunc_obj != NULL)
+      do_binary_run(log, mod, bfunc_obj, run);
+    if (tfunc_obj != NULL)
+      do_trinary_run(log, mod, tfunc_obj, run);
   }
 }
 
@@ -279,8 +339,20 @@ int main(int argc, char **argv) {
 
   cs::logger log(ADDRESS, PORT, SLEEPTIME);
 
-  std::cout << "iterations, " << ITERATIONS << std::endl;
   std::cout << "runs, " << RUNS << std::endl;
+
+
+  for (int index=0; index<NUM_UNARY_FUNCTIONS; index++) {
+    do_full_run(log, mod, &UNARY_FUNCTIONS[index], NULL, NULL);
+  }
+
+  for (int index=0; index<NUM_BINARY_FUNCTIONS; index++) {
+    do_full_run(log, mod, NULL, &BINARY_FUNCTIONS[index], NULL);
+  }
+
+  for (int index=0; index<NUM_TRINARY_FUNCTIONS; index++) {
+    do_full_run(log, mod, NULL, NULL, &TRINARY_FUNCTIONS[index]);
+  }
 
   // for (int type=0; type<4; type++) {
   //   for (int run=0; run<RUNS; run++) {
@@ -295,10 +367,6 @@ int main(int argc, char **argv) {
   //     horner(log, mod, run, type);
   //   }
   // }
-
-  for (int index=0; index<NUM_FUNCTIONS; index++) {
-    do_full_run(log, mod, &FUNCTIONS[index]);
-  }
 
   return 0;
 }

@@ -29,14 +29,11 @@ double gaussian_fixed_dev_input_b(void) {
   return rand_double(-1.0, 1.0);
 }
 
-double gaussian_fixed_dev_input_c(void) {
-  return 0.0;
-}
 
 
 
 
-double gaussian_fixed_dev_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_all64(double _a64, double _b64, float _a32, float _b32) {
   double x = _a64;
   double ave = _b64;
 
@@ -45,7 +42,7 @@ double gaussian_fixed_dev_all64(double _a64, double _b64, double _c64, float _a3
 }
 
 // 1e-22
-double gaussian_fixed_dev_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_0(double _a64, double _b64, float _a32, float _b32) {
   double x = _a64;
   double ave = _b64;
 
@@ -54,7 +51,7 @@ double gaussian_fixed_dev_mix_0(double _a64, double _b64, double _c64, float _a3
 }
 
 // 5e-08
-double gaussian_fixed_dev_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_1(double _a64, double _b64, float _a32, float _b32) {
   double x = _a64;
   double ave = _b64;
 
@@ -63,7 +60,7 @@ double gaussian_fixed_dev_mix_1(double _a64, double _b64, double _c64, float _a3
 }
 
 // 1e-07
-double gaussian_fixed_dev_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_2(double _a64, double _b64, float _a32, float _b32) {
   double x = _a64;
   double ave = _b64;
 
@@ -72,7 +69,7 @@ double gaussian_fixed_dev_mix_2(double _a64, double _b64, double _c64, float _a3
 }
 
 // 5e-07
-double gaussian_fixed_dev_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_mix_3(double _a64, double _b64, float _a32, float _b32) {
   float x = _a32;
   float ave = _b32;
 
@@ -81,7 +78,7 @@ double gaussian_fixed_dev_mix_3(double _a64, double _b64, double _c64, float _a3
 }
 
 
-double gaussian_fixed_dev_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_all32(double _a64, double _b64, float _a32, float _b32) {
   float x = _a32;
   float ave = _b32;
 
@@ -90,7 +87,7 @@ double gaussian_fixed_dev_all32(double _a64, double _b64, double _c64, float _a3
 }
 
 
-double gaussian_fixed_dev_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_dev_adaptive(double _a64, double _b64, float _a32, float _b32) {
   double x64 = _a64;
   double ave64 = _b64;
   float x = _a32;

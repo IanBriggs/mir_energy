@@ -29,14 +29,10 @@ double gaussian_fixed_x_input_b(void) {
   return rand_double(1.0, 3.0);
 }
 
-double gaussian_fixed_x_input_c(void) {
-  return 0.0;
-}
 
 
 
-
-double gaussian_fixed_x_all64(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_all64(double _a64, double _b64, float _a32, float _b32) {
   double ave = _a64;
   double dev = _b64;
 
@@ -45,7 +41,7 @@ double gaussian_fixed_x_all64(double _a64, double _b64, double _c64, float _a32,
 }
 
 // 1e-22
-double gaussian_fixed_x_mix_0(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_0(double _a64, double _b64, float _a32, float _b32) {
   double ave = _a64;
   double dev = _b64;
 
@@ -54,7 +50,7 @@ double gaussian_fixed_x_mix_0(double _a64, double _b64, double _c64, float _a32,
 }
 
 // 5e-08
-double gaussian_fixed_x_mix_1(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_1(double _a64, double _b64, float _a32, float _b32) {
   double ave = _a64;
   double dev = _b64;
 
@@ -63,7 +59,7 @@ double gaussian_fixed_x_mix_1(double _a64, double _b64, double _c64, float _a32,
 }
 
 // 1e-07
-double gaussian_fixed_x_mix_2(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_2(double _a64, double _b64, float _a32, float _b32) {
   double ave = _a64;
   double dev = _b64;
 
@@ -72,7 +68,7 @@ double gaussian_fixed_x_mix_2(double _a64, double _b64, double _c64, float _a32,
 }
 
 // 5e-07
-double gaussian_fixed_x_mix_3(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_mix_3(double _a64, double _b64, float _a32, float _b32) {
   float ave = _a32;
   float dev = _b32;
 
@@ -81,7 +77,7 @@ double gaussian_fixed_x_mix_3(double _a64, double _b64, double _c64, float _a32,
 }
 
 
-double gaussian_fixed_x_all32(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_all32(double _a64, double _b64, float _a32, float _b32) {
   float ave = _a32;
   float dev = _b32;
 
@@ -90,7 +86,7 @@ double gaussian_fixed_x_all32(double _a64, double _b64, double _c64, float _a32,
 }
 
 
-double gaussian_fixed_x_adaptive(double _a64, double _b64, double _c64, float _a32, float _b32, float _c32) {
+double gaussian_fixed_x_adaptive(double _a64, double _b64, float _a32, float _b32) {
   double ave64 = _a64;
   double dev64 = _b64;
   float ave = _a32;
