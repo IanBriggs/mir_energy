@@ -36,7 +36,11 @@ int main(int argc, char **argv) {
 
   std::cout << "runs, " << RUNS << std::endl;
 
+  horner(log, mod, RUNS);
 
+  balanced_reduction(log, mod, RUNS);
+
+  
   for (int index=0; index<NUM_UNARY_FUNCTIONS; index++) {
     do_unary_run_set(log, mod, &UNARY_FUNCTIONS[index], RUNS);
   }
