@@ -5,8 +5,8 @@
 #include "comm.hpp"
 #include "rand_double.hpp"
 
-const long long HORNER_ITERATIONS = 1<<24;
-const int HORNER_LENGTH = 32;
+const long long HORNER_ITERATIONS = 1<<29;
+const int HORNER_LENGTH = 50;
 
 
 typedef double (*horner_function)(int, double*, float*, double, float);
@@ -114,7 +114,7 @@ void do_horner_run(cs::logger &log, char *mod, horner_function_object *func_obj,
   float x32 = x64;
 
   char buff[MAXBUF];
-  sprintf(buff, "ian_horner_%s_%s_run_%d.csv", func_obj->name, mod, run);
+  sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
   log.start_logging(buff);
 
   for (long long i=0; i<HORNER_ITERATIONS; i++) {

@@ -1,5 +1,5 @@
-CXX=g++
-#CXX=clang++3.5
+#CXX=g++
+CXX=clang++-3.5
 
 
 CXXFLAGS:= -std=c++0x -O3 -mfpu=neon -march=native -fno-inline ${CXXFLAGS}

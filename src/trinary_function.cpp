@@ -36,7 +36,7 @@ void do_trinary_run(cs::logger &log, char *mod, trinary_function_object *func_ob
 
 void do_trinary_run_set(cs::logger &log, char *mod,
 		 trinary_function_object *func_obj, int runs) {
-  std::cout << "\nIterations," << func_obj->iterations << std::endl;
+  std::cout << "\nIterations, " << func_obj->iterations << std::endl;
     
   for (int run=0; run<runs; run++) {
     srand(run+42);

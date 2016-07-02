@@ -5,8 +5,9 @@
 #include "comm.hpp"
 #include "rand_double.hpp"
 
-const long long BALANCED_REDUCTION_ITERATIONS = 1<<24;
-const int BALANCED_REDUCTION_LENGTH = 128;
+
+const long long BALANCED_REDUCTION_ITERATIONS = 1<<28;
+const int BALANCED_REDUCTION_LENGTH = 512;
 
 
 typedef double (*balanced_reduction_function)(int, double*, float*, double*, float*);
@@ -93,7 +94,7 @@ void do_balanced_reduction_run(cs::logger &log, char* mod,
   }
 
   char buff[MAXBUF];
-  sprintf(buff, "ian_balanced_reduction_%s_%s_run_%d.csv", func_obj->name, mod, run);
+  sprintf(buff, "ian_%s_%s_run_%d.csv", func_obj->name, mod, run);
   log.start_logging(buff);
 
   for (long long i=0; i<BALANCED_REDUCTION_ITERATIONS; i++) {

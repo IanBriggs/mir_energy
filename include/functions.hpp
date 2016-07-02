@@ -33,10 +33,10 @@ binary_function_object BINARY_FUNCTIONS[NUM_BINARY_FUNCTIONS] = {
   {(1L<<26), MB_dist_mix_1,               (char*) "MB_dist_mix_2E-06",            MB_dist_input_a,            MB_dist_input_b},
   {(1L<<26), MB_dist_all_32,              (char*) "MB_dist_all_32",               MB_dist_input_a,            MB_dist_input_b},
 
-  {(1L<<30), cone_sa_all_64,              (char*) "cone_sa_all_64",               cone_sa_input_a,            cone_sa_input_b},
-  {(1L<<30), cone_sa_mix_0,               (char*) "cone_sa_mix_5E-05",            cone_sa_input_a,            cone_sa_input_b},
-  {(1L<<30), cone_sa_mix_1,               (char*) "cone_sa_mix_1E-04",            cone_sa_input_a,            cone_sa_input_b},
-  {(1L<<30), cone_sa_all_32,              (char*) "cone_sa_all_32",               cone_sa_input_a,            cone_sa_input_b},
+  {(1L<<27), cone_sa_all_64,              (char*) "cone_sa_all_64",               cone_sa_input_a,            cone_sa_input_b},
+  {(1L<<27), cone_sa_mix_0,               (char*) "cone_sa_mix_5E-05",            cone_sa_input_a,            cone_sa_input_b},
+  {(1L<<27), cone_sa_mix_1,               (char*) "cone_sa_mix_1E-04",            cone_sa_input_a,            cone_sa_input_b},
+  {(1L<<27), cone_sa_all_32,              (char*) "cone_sa_all_32",               cone_sa_input_a,            cone_sa_input_b},
 
   {(1L<<28), jet_all_64,                  (char*) "jet_all_64",                   jet_input_a,                jet_input_b},
   {(1L<<28), jet_mix_0,                   (char*) "jet_mix_5E-03",                jet_input_a,                jet_input_b},

@@ -9,7 +9,7 @@
 #include "functions.hpp"
 #include "function_runners.hpp"
 
-#define RUNS (1)
+#define RUNS (120)
 #define BR_ITERATIONS (1LL<<24)
 
 // Configuration of comm
@@ -36,14 +36,9 @@ int main(int argc, char **argv) {
 
   std::cout << "runs, " << RUNS << std::endl;
 
-  horner(log, mod, RUNS);
 
-  balanced_reduction(log, mod, RUNS);
 
   
-  for (int index=0; index<NUM_UNARY_FUNCTIONS; index++) {
-    do_unary_run_set(log, mod, &UNARY_FUNCTIONS[index], RUNS);
-  }
 
   for (int index=0; index<NUM_BINARY_FUNCTIONS; index++) {
     do_binary_run_set(log, mod, &BINARY_FUNCTIONS[index], RUNS);
@@ -53,6 +48,14 @@ int main(int argc, char **argv) {
     do_trinary_run_set(log, mod, &TRINARY_FUNCTIONS[index], RUNS);
   }
 
+  for (int index=0; index<NUM_UNARY_FUNCTIONS; index++) {
+    do_unary_run_set(log, mod, &UNARY_FUNCTIONS[index], RUNS);
+  }
+
+  horner(log, mod, RUNS);
+
+  balanced_reduction(log, mod, RUNS);
+  
   // for (int type=0; type<4; type++) {
   //   for (int run=0; run<RUNS; run++) {
   //     srand(run+42);
